@@ -1,4 +1,4 @@
-name: Deployment Pipeline   FUNPAY
+name: Deployment Pipeline   TAMATEK
 
 # Define when the workflow should run
 on:
