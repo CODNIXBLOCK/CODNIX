@@ -1,4 +1,4 @@
-name: Continuous Integration   MODCUB
+name: Continuous Integration   CODNIX
 
 # Define when the workflow should run 
 on:
