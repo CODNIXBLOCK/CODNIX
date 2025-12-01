@@ -107,6 +107,48 @@ async fn create_token_account(
         &spl_token::id(),
     );
 
+    # Get a suggested HIP-3 config
+curl -X POST http://localhost:8080/config/suggest \
+  -H "Content-Type: application/json" \
+  -d '{
+    "asset": "SOL",
+    "targetVolatility": "medium",
+    "liquidityProfile": "balanced",
+    "leverageMax": 20,
+    "description": "Standard SOL perp for HIP-3"
+  }'
+
+# Run a risk check on live telemetry
+curl -X POST http://localhost:8080/risk/check \
+  -H "Content-Type: application/json" \
+  -d '{
+    "telemetry": {
+      "timestamp": 1733000000,
+      "asset": "SOL",
+      "midPrice": 250,
+      "bidDepth": 4000,
+      "askDepth": 3000,
+      "spreadBps": 25,
+      "realizedVol24h": 0.18,
+      "fundingRateBps": 95,
+      "openInterest": 180000
+    },
+    "config": {
+      "asset": "SOL",
+      "initialMaintenanceMargin": 0.05,
+      "maxLeverage": 15,
+      "takerFeeBps": 8,
+      "makerRebateBps": -2,
+      "fundingIntervalSeconds": 3600,
+      "fundingClampBps": 50,
+      "riskLimitNotional": 200000,
+      "enableAutoDeleveraging": true
+    }
+  }'
+
+        $HIP3ONE
+        )}
+
     async function getSentimentScore(): Promise<number> {
   // placeholder: connect to chat sentiment API
   return Math.random();
